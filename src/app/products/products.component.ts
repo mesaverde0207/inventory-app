@@ -10,6 +10,8 @@ import { IProduct, ProductService } from '../product.service';
 })
 export class ProductsComponent implements OnInit {
   products$: Observable<IProduct[]> = this.productService.products$;
+  delete = false;
+  productToBeDeleted: IProduct;
 
   constructor(private productService: ProductService) { }
 
@@ -31,8 +33,17 @@ export class ProductsComponent implements OnInit {
   }
 
   onDelete(product: IProduct) {
-    // TODO: add deleting functionality
-    return;
+    this.delete = true;
+    this.productToBeDeleted = product;
+  }
+
+  handleCancel() {
+    this.delete = false;
+  }
+
+  confirmDelete() {
+    this.handleCancel();
+    this.productService.removeProduct(this.productToBeDeleted);
   }
 
 }
