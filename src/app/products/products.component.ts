@@ -10,8 +10,10 @@ import { IProduct, ProductService } from '../product.service';
 })
 export class ProductsComponent implements OnInit {
   products$: Observable<IProduct[]> = this.productService.products$;
+  productOpen: boolean;
   delete = false;
   productToBeDeleted: IProduct;
+  selectedProduct: IProduct;
 
   constructor(private productService: ProductService) { }
 
@@ -23,13 +25,13 @@ export class ProductsComponent implements OnInit {
   }
 
   addProduct() {
-    // TODO: implement the functionality of adding a new product
-    return;
+    this.productOpen = true;
+    this.selectedProduct = undefined;
   }
 
   onEdit(product: IProduct) {
-    // TODO: add editing functionality
-    return;
+    this.productOpen = true;
+    this.selectedProduct = product;
   }
 
   onDelete(product: IProduct) {
@@ -46,4 +48,14 @@ export class ProductsComponent implements OnInit {
     this.productService.removeProduct(this.productToBeDeleted);
   }
 
+  handleFinish(event) {
+    if (event && event.product) {
+      if (!!this.selectedProduct) {
+        this.productService.editProduct(this.selectedProduct.id, event.product);
+      } else {
+        this.productService.addProduct(event.product);
+      }
+    }
+    this.productOpen = false;
+  }
 }
