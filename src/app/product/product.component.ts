@@ -81,7 +81,7 @@ export class ProductComponent implements OnInit {
 
   get expirationError() {
     if (this.productForm.get('expiration.expirationDate').hasError('required')) {
-      return 'This field is required'
+      return 'This field is required';
     }
     if (this.productForm.get('expiration.expirationDate').hasError('minDateValidation')) {
       return 'Expiration should be after today\'s date';
