@@ -124,6 +124,7 @@ export class ProductService {
       },
       ...this.products.slice(index+1)
     ];
+    this.products$.next(this.products);
   }
 
   removeProduct(product: IProduct) {
